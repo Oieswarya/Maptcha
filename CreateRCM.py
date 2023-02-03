@@ -3,21 +3,10 @@ import pandas as pd
 from networkx.utils import reverse_cuthill_mckee_ordering
 
 
-# In[17]:
-
 
 df = pd.read_csv('~/HM7_CCPairsFromAsym.log', sep=' ', header=None)
 df.head()
-
-
-# In[18]:
-
-
 G = nx.from_pandas_edgelist(df, 0, 1, [2])
-
-
-# In[19]:
-
 
 def reverse_cuthill_mckee(G):
     nx.set_node_attributes(G, False, "visited")
