@@ -8,13 +8,8 @@ import time
 # get the start time
 st = time.time()
 
-
-
 df = pd.read_csv('~\CLPairs_from8_CE.log', sep =' ', header=None)
 df.head()
-
-
-
 
 map_contig = {}
 for i, row in df.iterrows():
@@ -23,22 +18,14 @@ for i, row in df.iterrows():
     else:
         map_contig[row[0]].append(row[1])
 
-
-
-
 df_g = pd.read_csv('~\CCPairs_CE.log', sep =' ', header=None)
 
 G = nx.from_pandas_edgelist(df_g, 0, 1, [2])
 df_g.head()
 
 
-
-
 G1 = nx.Graph()
 no_edge = 2
-
-
-
 
 count_lr = []
 for n in G.nodes():
