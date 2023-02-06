@@ -9,4 +9,6 @@ For ordering the contigs there are three approaches we used---(i)b-way graph mat
 
 The combined.py script contains all the three python scripts.
 
-toy.log is for testing. Contains the graph. Input for any of the three scaffolding approaches.
+toy.log is for testing. Contains the graph. Can be used as input for wiring heusristic and vertex reordering approach.
+
+toyForBway.mtx is test input for bway graph matching.
