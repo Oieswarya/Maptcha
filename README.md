@@ -8,3 +8,5 @@ For the graph construction, we use a python script: graphconstr.py
 For ordering the contigs there are three approaches we used---(i)b-way graph matching (https://github.com/ECP-ExaGraph/bMatching), (ii) wiring heuristic (Wiring.py), and (iii) vertex reordering (CreateRCM.py).
 
 The combined.py script contains all the three python scripts.
+
+toy.log is for testing. Contains the graph. Input for any of the three scaffolding approaches.
