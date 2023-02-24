@@ -5,8 +5,11 @@ The next step is the graph construction. The code is written in the graphconstr.
 The graph generated from this step and the sample fasta files will look like this:
 
 1 2 2
+
 2 3 1
+
 3 4 2
+
 4 5 2
 
 This is the input for the scaffolding techniques. 
