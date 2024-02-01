@@ -7,7 +7,7 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
 
 3. Link Scaffolds with Bridges: In the final phase, the algorithm aims to bridge the first and second generation scaffolds using long reads that serve as bridges between them. This crucial step produces the final set of scaffolds, providing a comprehensive assembly of the genome.
 
-In the the first phase, for the purpose of mapping the long reads to contigs, we use JEM-Mapper: https://github.com/TazinRahman1105050/JEM-Mapper/tree/beta-2.1
+In the the first phase, for the purpose of mapping the long reads to contigs, we use JEM-Mapper:(https://github.com/TazinRahman1105050/JEM-Mapper)]
 Please use the link to install and map your contigs to long reads.
 
 For the graph construction, we use a python script: graphconstr.py
