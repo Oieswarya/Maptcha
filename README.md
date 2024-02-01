@@ -8,7 +8,7 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
 3. Link Scaffolds with Bridges: In the final phase, the algorithm aims to bridge the first and second generation scaffolds using long reads that serve as bridges between them. This crucial step produces the final set of scaffolds, providing a comprehensive assembly of the genome.
 
 ################################################################################
-Requirements:
+**Requirements:**
 - C++14 (or greater) compliant compiler
 - OpenMPI
 - Python 3 (or greater)
