@@ -1,5 +1,5 @@
 # Maptcha
-'''
+'''markdown
 Maptcha addresses the hybrid scaffolding problem. We have three major phases: 
 1. Contig Expansion: Initially, the algorithm extends contigs using long reads that align with the ends of these contigs. This phase also involves detecting and connecting successive pairs of contigs using direct long read links, resulting in the generation of partial scaffolds.
 
