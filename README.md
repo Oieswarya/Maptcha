@@ -14,6 +14,7 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
 - Python 3 (or greater)
   
 ################################################################################
+
 For the purpose of mapping the long reads to contigs, we use JEM-Mapper:(https://github.com/TazinRahman1105050/JEM-Mapper)
 Please use the link to install and map your long reads to the contigs.
 
