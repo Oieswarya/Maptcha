@@ -18,9 +18,4 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
 For the purpose of mapping the long reads to contigs, we use JEM-Mapper:(https://github.com/TazinRahman1105050/JEM-Mapper)
 Please use the link to install and map your long reads to the contigs.
 
-For the graph construction, we use a python script: graphconstr.py
-For ordering the contigs there are three approaches we used---(i)b-way graph matching (https://github.com/ECP-ExaGraph/bMatching), (ii) wiring heuristic (Wiring.py), and (iii) vertex reordering (CreateRCM.py).
 
-The combined.py script contains all the three python scripts.
-
-Please read the ToyInputData/ReadmeForInputs.md to use the sample inputs efficiently.
