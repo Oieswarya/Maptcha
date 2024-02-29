@@ -10,8 +10,8 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
 ################################################################################
 **Requirements:**
 - C++14 (or greater) compliant compiler
-- OpenMPI
-- Python 3 (or greater)
+- MPI library (preferably MPI-3 compatible)
+- Python 3 (or greater) compliant compiler
   
 ################################################################################
 
