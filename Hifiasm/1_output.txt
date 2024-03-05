@@ -1,0 +1,4 @@
+Folder: 1, Elapsed time: 4 seconds
+Folder: 1, Elapsed time: 2 seconds
+Folder: 1, Elapsed time: 3 seconds
+Folder: 1, Elapsed time: 2 seconds
