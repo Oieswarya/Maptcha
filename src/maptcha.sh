@@ -1,7 +1,5 @@
 #!/bin/bash
-#PBS -l nodes=1:intel:ppn=1
-#PBS -l mem=120gb
-#PBS -l walltime=06:00:00
+
 
 # Check if the number of arguments is correct
 if [ "$#" -ne 2 ]; then
@@ -252,11 +250,6 @@ echo "Job scripts created and submitted in $elapsed_time seconds."
 python3 $HOME/Maptcha/src/CreateUnmappedUnusedLR.py $HOME/Maptcha/Output/FastaFilesBatch_8192/ $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa $HOME/Maptcha/Output/unused_longreads.fasta
 
 
-## Define compute options
-#PBS -l nodes=3:amd:ppn=20
-#PBS -l mem=120gb
-#PBS -l walltime=06:00:00
-
 
 cd $HOME/Maptcha/Hifiasm/
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
@@ -280,13 +273,6 @@ echo "Longread Island Construction done! "
 
 
 python3 $HOME/Maptcha/src/merge.py $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/Output/Phase1_2_partialScaff.fa
-
- 
-## Define compute options
-#PBS -l nodes=1:amd:ppn=20
-#PBS -l mem=120gb
-#PBS -l walltime=06:00:00
-
 
 cd $HOME/Maptcha/Hifiasm/
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
