@@ -35,7 +35,8 @@ To map long reads to contigs, Maptcha utilizes the following tools:
    ```bash
    git clone https://github.com/Oieswarya/Maptcha.git
 
-### For a quick test, you can use the provided setup where the necessary tools are pre-installed. Navigate to the src directory within the Maptcha repository and run the maptcha.sh script**
+### For a quick test, you can use the provided setup with a test input where the necessary tools are pre-installed. Navigate  within the Maptcha repository and run the `maptcha.sh` script:
+
 
 ```bash
 chmod +x maptcha/src/maptcha.sh
