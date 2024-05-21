@@ -35,6 +35,8 @@ chmod +x maptcha/src/maptcha.sh
 ```
 Ensure that you have the appropriate permissions to execute the job script.
 
+The final scaffolds will be located here: ~/Maptcha/Output/Final/finalAssembly.fa, within the Output folder of the Maptcha directory.
+
 **Requirements:**
 You will still need the following modules:
 - C++14 (or greater) compliant compiler
