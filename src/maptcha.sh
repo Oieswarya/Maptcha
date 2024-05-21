@@ -2,17 +2,18 @@
 #PBS -l nodes=1:intel:ppn=1
 #PBS -l mem=120gb
 #PBS -l walltime=06:00:00
-module load gcc/7.3.0
-module load python/3.8/gcc/7.3.0
-module load sqlite/3.35.1/system
+
+#Load the required modules
 #module load gcc/7.3.0
-module load openmpi/3.1.2/gcc/7.3.0
+#module load python/3.8/gcc/7.3.0
+#module load sqlite/3.35.1/system
+#module load openmpi/3.1.2/gcc/7.3.0
 
 
 ############      Creating the log file from JEM-Mapper output      ###############
-python3 ~/Maptcha/src/CreateCLFromLog_PyCharm.py
-map_output="~/Maptcha/CLPairs.log"
-
+python3 $HOME/Maptcha/src/CreateCLFromLog_PyCharm.py
+cd ~/Maptcha/TestInput/
+map_output="$HOME/Maptcha/TestInput/CLPairs.log"
 
 #################################################################  Contig Expansion    ##############################################################################
 
@@ -28,18 +29,20 @@ g++ -fopenmp -O3 -o ~/Maptcha/src/graphLRID ~/Maptcha/src/graphLRID.cpp
 
 ################# Wiring and Path Enumeration  ###################
  
-python3 ~/Maptcha/src/Wiring.py "$map_output" ~/Maptcha/graphWH.txt "~/Maptcha/wired_output.txt"
+#python3 ~/Maptcha/src/Wiring.py "$map_output" ~/Maptcha/graphWH.txt "~/Maptcha/wired_output.txt"
+python3 ~/Maptcha/src/Wiring.py "$map_output" ~/Maptcha/graphWH.txt "$HOME/Maptcha/wired_output.txt"
 
 
-python3 ~/Maptcha/src/PathEnumeration.py "$map_output" ~/Maptcha/wired_output.txt ~/Maptcha/path_output.txt
+python3 ~/Maptcha/src/PathEnumeration.py "$map_output" $HOME/Maptcha/wired_output.txt $HOME/Maptcha/path_output.txt
 
 
 ################# Batching of Contigs  ###################
 
-python3 ~/Maptcha/src/CreateCCFileForEachPair_args.py "~/Maptcha/wired_output.txt" "~/Maptcha/path_output.txt" "~/Maptcha/Output/"
+#python3 $HOME/Maptcha/src/CreateCCFileForEachPair_args.py "$HOME/Maptcha/wired_output.txt" "$HOME/Maptcha/path_output.txt" "$HOME/Maptcha/Output/"
+python3 $HOME/Maptcha/src/CreateCCFileForEachPair_args.py "$HOME/Maptcha/wired_output.txt" "$HOME/Maptcha/graphLRID.txt" "$HOME/Maptcha/Output/"
 
 
-python3 ~/Maptcha/src/CreateBatchOfContigs.py "~/Maptcha/path_output.txt" "~/Maptcha/Output/" "~/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa" "~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa" "~/Maptcha/Output/FastaFilesBatch_8192/" 40 8192
+python3 $HOME/Maptcha/src/CreateBatchOfContigs.py "$HOME/Maptcha/path_output.txt" "$HOME/Maptcha/Output/" "$HOME/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa" "$HOME/Maptcha//TestInput/CoxiellaBurnetii_longreads.fa" "$HOME/Maptcha/Output/FastaFilesBatch_8192/" 40 8192
 
 
 #!/bin/bash
@@ -48,17 +51,29 @@ python3 ~/Maptcha/src/CreateBatchOfContigs.py "~/Maptcha/path_output.txt" "~/Map
 #PBS -l mem=4gb
 #PBS -l walltime=01:00:00
 
-cd ~/Maptcha/Hifiasm/
+#cd /home/obhowmik/hifiasm_old/
+cd $HOME/Maptcha/Hifiasm/
+chmod +x $HOME/Maptcha/Hifiasm/hifiasm
 
-# Load MPI module
-module load gcc/7.3.0
-module load openmpi/3.1.2/gcc/7.3.0
+
 
 # Set the path to the directory containing the input folders
-input_dir='~/Maptcha/Output/FastaFilesBatch_8192/'
+input_dir='$HOME/Maptcha/Output/FastaFilesBatch_8192/'
 
 # Set the path to the job scripts directory
-job_scripts_dir= ~/Maptcha/Output/jobScripts_Coxiella/
+mkdir -p "$HOME/Maptcha/Output/jobScripts_Coxiella/"
+job_scripts_dir="$HOME/Maptcha/Output/jobScripts_Coxiella/"
+
+# Assign the job scripts directory to the variable
+job_scripts_dir="$HOME/Maptcha/Output/jobScripts_Coxiella/"
+
+# Check if the directory was created successfully
+if [ -d "$job_scripts_dir" ]; then
+    echo "Job scripts directory created successfully."
+else
+    echo "Failed to create job scripts directory."
+    exit 1
+fi
 
 # Start the timer
 start_time=$(date +%s)
@@ -145,10 +160,10 @@ for ((node=0; node < nodes; node++)); do
 #PBS -l mem=120gb
 #PBS -l walltime=06:00:00
 
-cd ~/Maptcha/Hifiasm/
 
-# Load MPI module
-module load openmpi/3.1.2/gcc/7.3.0
+cd $HOME/Maptcha/Hifiasm
+chmod +x $HOME/Maptcha/Hifiasm/hifiasm
+
 
 EOF
 
@@ -164,7 +179,7 @@ EOF
     cat >> "$job_script" <<EOF
 # Processing folder: $folder_name
 start_folder_time=\$(date +%s)
-~/Maptcha/Hifiasm/hifiasm -o "$folder/$output_file" -t 1 "$contigs_file" "$long_reads_file"
+$HOME/Maptcha/Hifiasm/hifiasm -o "$folder/$output_file" -t 1 "$contigs_file" "$long_reads_file"
 end_folder_time=\$(date +%s)
 folder_elapsed_time=\$((end_folder_time - start_folder_time))
 
@@ -187,7 +202,8 @@ wait
 
 # Initialize the time_list array
 time_list=()
-
+phase1_2_output="$HOME/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa" 
+unusedlongreads="$HOME/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa"
 # Loop through each batch and read the elapsed times from the output files
 for ((node=0; node < nodes; node++)); do
   job_script="${job_scripts_dir}/job_script_node_${node}.sh"
@@ -203,16 +219,8 @@ calculate_stats
 
 
 
-echo "Batched assembly: "
+echo "Batched assembly done! "
 
-# Print max time
-echo "Max time across all folders: $max_time seconds"
-
-# Print average time
-echo "Average time across all folders: $average_time seconds"
-
-# Print standard deviation
-echo "Standard deviation of time across all folders: $standard_deviation"
 
 # Calculate the total elapsed time for creating and submitting all job scripts
 end_time=$(date +%s)
@@ -224,10 +232,8 @@ echo "Job scripts created and submitted in $elapsed_time seconds."
 #################################################################  Longread Island Construction    ##############################################################################
 
 
-python3 ~/Maptcha/src/CreateUnmappedUnusedLR.py ~/Maptcha/Output/FastaFilesBatch_8192/ ~/Maptcha/Output/contExp.fasta ~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa ~/Maptcha/Output/unused_longreads.fasta
+python3 $HOME/Maptcha/src/CreateUnmappedUnusedLR.py $HOME/Maptcha/Output/FastaFilesBatch_8192/ $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa $HOME/Maptcha/Output/unused_longreads.fasta
 
-phase1_2_output="~/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa" 
-unusedlongreads="~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa"
 
 #!/bin/bash
 ## Define compute options
@@ -235,25 +241,29 @@ unusedlongreads="~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa"
 #PBS -l mem=120gb
 #PBS -l walltime=06:00:00
 
-cd ~/Maptcha/Hifiasm/
+
+cd $HOME/Maptcha/Hifiasm/
+chmod +x $HOME/Maptcha/Hifiasm/hifiasm
 
 # Start the timer
 start_time=$(date +%s)
 
-./hifiasm -o ~/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm -t 64 ~/Maptcha/Output/unused_longreads.fasta
+mkdir $HOME/Maptcha/Output/Phase2/
 
-awk '/^S/{print ">"$2;print $3}' ~/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa > ~/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa
+$HOME/Maptcha/Hifiasm/hifiasm -o $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm -t 64 $HOME/Maptcha/Output/unused_longreads.fasta
+
+awk '/^S/{print ">"$2;print $3}' $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa > $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa
 
 
 # Calculate the elapsed time
 end_time=$(date +%s)
 elapsed_time=$((end_time - start_time))
 
-
+echo "Longread Island Construction done! "
 #################################################################  Link Scaffolds With Bridges    ##############################################################################
 
 
-python3 ~/Maptcha/src/merge.py ~/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa ~/Maptcha/Output/contExp.fasta ~/Maptcha/Output/Phase1_2_partialScaff.fa
+python3 $HOME/Maptcha/src/merge.py $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/Output/Phase1_2_partialScaff.fa
 
 
 #!/bin/bash 
@@ -262,19 +272,23 @@ python3 ~/Maptcha/src/merge.py ~/Maptcha/Output/Phase2/Only_UnmappedUnusedLongre
 #PBS -l mem=120gb
 #PBS -l walltime=06:00:00
 
-cd ~/Maptcha/Hifiasm/
+
+cd $HOME/Maptcha/Hifiasm/
+chmod +x $HOME/Maptcha/Hifiasm/hifiasm
 
 # Start the timer
 start_time=$(date +%s)
 
-./hifiasm -o ~/Maptcha/Output/Final/finalAssenbly.asm -t 64 -n 1 "$phase1_2_output" "$unusedlongreads"
+mkdir $HOME/Maptcha/Output/Final/
 
-awk '/^S/{print ">"$2;print $3}' ~/Maptcha/Output/Final/finalAssenbly.asm.bp.p_ctg.gfa > ~/Maptcha/Output/Final/finalAssenbly.asm.bp.p_ctg.gfa.fa
+$HOME/Maptcha/Hifiasm/hifiasm -o $HOME/Maptcha/Output/Final/finalAssembly.asm -t 64 -n 1 "$phase1_2_output" "$unusedlongreads"
+
+awk '/^S/{print ">"$2;print $3}' $HOME/Maptcha/Output/Final/finalAssembly.asm.bp.p_ctg.gfa > $HOME/Maptcha/Output/Final/finalAssembly.fa
 
 
 # Calculate the elapsed time
 end_time=$(date +%s)
 elapsed_time=$((end_time - start_time))
-
+echo "Link Scaffolds With Bridges done! "
 
 
