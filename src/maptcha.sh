@@ -32,7 +32,7 @@ fi
 
 
 ############      Creating the log file from JEM-Mapper output      ###############
-python3 $HOME/Maptcha/src/CreateCLFromLog.py
+#python3 $HOME/Maptcha/src/CreateCLFromLog.py
 cd ~/Maptcha/TestInput/
 map_output="$HOME/Maptcha/TestInput/CLPairs.log"
 
