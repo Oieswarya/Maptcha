@@ -36,11 +36,19 @@ To map long reads to contigs, Maptcha utilizes the following tools:
 2. **Clone the Maptcha Repository**
 
    ```bash
-   git clone https://github.com/your-username/maptcha.git
+   git clone https://github.com/Oieswarya/Maptcha.gitit
 
 For a quick test, you can use the provided setup where the necessary tools are pre-installed. Navigate to the src directory within the Maptcha repository and run the maptcha.sh script:
+```bash
 cd maptcha/src
 chmod +x maptcha.sh
 ./maptcha.sh
 
+Ensure that you have the appropriate permissions to execute the job script.
 
+For more detailed usage and configuration options, please refer to the documentation within each tool's repository:
+
+- [JEM-Mapper Documentation](https://github.com/TazinRahman1105050/JEM-Mapper)
+- [Hifiasm Documentation](https://github.com/chhylp123/hifiasm)
+
+By following these steps, you should be able to set up and run Maptcha seamlessly. If you encounter any issues, please feel free to open an issue on the GitHub repository.
