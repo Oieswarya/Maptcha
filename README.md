@@ -7,11 +7,6 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
 
 3. Link Scaffolds with Bridges: In the final phase, the algorithm aims to bridge the first and second generation scaffolds using long reads that serve as bridges between them. This crucial step produces the final set of scaffolds, providing a comprehensive assembly of the genome.
 
-################################################################################
-**Requirements:**
-- C++14 (or greater) compliant compiler
-- MPI library (preferably MPI-3 compatible)
-- Python 3 (or greater) compliant compiler
   
 ################################################################################
 
@@ -35,15 +30,19 @@ To map long reads to contigs, Maptcha utilizes the following tools:
    ```bash
    git clone https://github.com/Oieswarya/Maptcha.git
 
-### For a quick test, you can use the provided setup with a test input where the necessary tools are pre-installed. Navigate  within the Maptcha repository and run the `maptcha.sh` script:
-
+### For a quick test, you can use the provided setup with a test input where the necessary tools are pre-installed. Navigate  within the Maptcha repository and run the `maptcha.sh` script. 
 
 ```bash
 chmod +x maptcha/src/maptcha.sh
 ./maptcha.sh
 ```
-
 Ensure that you have the appropriate permissions to execute the job script.
+
+**Requirements:**
+You will still need the following modules:
+- C++14 (or greater) compliant compiler
+- MPI library (preferably MPI-3 compatible)
+- Python 3 (or greater) compliant compiler:
 
 For more detailed usage and configuration options, please refer to the documentation within each tool's repository:
 
