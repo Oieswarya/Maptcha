@@ -15,9 +15,6 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
   
 ################################################################################
 
-For the purpose of mapping the long reads to contigs, we use JEM-Mapper:(https://github.com/TazinRahman1105050/JEM-Mapper)
-Please use the link to install and map your long reads to the contigs.
-
 # Maptcha
 
 ## Installation Instructions
@@ -36,12 +33,14 @@ To map long reads to contigs, Maptcha utilizes the following tools:
 2. **Clone the Maptcha Repository**
 
    ```bash
-   git clone https://github.com/Oieswarya/Maptcha.gitit
+   git clone https://github.com/Oieswarya/Maptcha.git
 
 For a quick test, you can use the provided setup where the necessary tools are pre-installed. Navigate to the src directory within the Maptcha repository and run the maptcha.sh script:
 ```bash
 cd maptcha/src
+```bash
 chmod +x maptcha.sh
+```bash
 ./maptcha.sh
 
 Ensure that you have the appropriate permissions to execute the job script.
