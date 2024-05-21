@@ -3,6 +3,27 @@
 #PBS -l mem=120gb
 #PBS -l walltime=06:00:00
 
+# Check if the number of arguments is correct
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <contigs_input_file> <long_reads_input_file>"
+    exit 1
+fi
+
+# Assign command line arguments to variables
+contigs_input_file="$1"
+long_reads_input_file="$2"
+
+# Check if the input files exist
+if [ ! -f "$contigs_input_file" ]; then
+    echo "Contigs input file '$contigs_input_file' not found."
+    exit 1
+fi
+
+if [ ! -f "$long_reads_input_file" ]; then
+    echo "Long reads input file '$long_reads_input_file' not found."
+    exit 1
+fi
+
 #Load the required modules
 #module load gcc/7.3.0
 #module load python/3.8/gcc/7.3.0
@@ -10,8 +31,10 @@
 #module load openmpi/3.1.2/gcc/7.3.0
 
 
+
+
 ############      Creating the log file from JEM-Mapper output      ###############
-python3 $HOME/Maptcha/src/CreateCLFromLog_PyCharm.py
+python3 $HOME/Maptcha/src/CreateCLFromLog.py
 cd ~/Maptcha/TestInput/
 map_output="$HOME/Maptcha/TestInput/CLPairs.log"
 
@@ -39,8 +62,7 @@ python3 ~/Maptcha/src/PathEnumeration.py "$map_output" $HOME/Maptcha/wired_outpu
 
 python3 $HOME/Maptcha/src/CreateCCFileForEachPair_args.py "$HOME/Maptcha/wired_output.txt" "$HOME/Maptcha/graphLRID.txt" "$HOME/Maptcha/Output/"
 
-
-python3 $HOME/Maptcha/src/CreateBatchOfContigs.py "$HOME/Maptcha/path_output.txt" "$HOME/Maptcha/Output/" "$HOME/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa" "$HOME/Maptcha//TestInput/CoxiellaBurnetii_longreads.fa" "$HOME/Maptcha/Output/FastaFilesBatch_8192/" 40 8192
+python3 $HOME/Maptcha/src/CreateBatchOfContigs.py "$HOME/Maptcha/path_output.txt" "$HOME/Maptcha/Output/" "$contigs_input_file" "$long_reads_input_file" "$HOME/Maptcha/Output/FastaFilesBatch_8192/" 40 8192
 
 
 ## Define compute options for the main job
@@ -57,11 +79,11 @@ chmod +x $HOME/Maptcha/Hifiasm/hifiasm
 input_dir='$HOME/Maptcha/Output/FastaFilesBatch_8192/'
 
 # Set the path to the job scripts directory
-mkdir -p "$HOME/Maptcha/Output/jobScripts_Coxiella/"
-job_scripts_dir="$HOME/Maptcha/Output/jobScripts_Coxiella/"
+mkdir -p "$HOME/Maptcha/Output/jobScripts/"
+job_scripts_dir="$HOME/Maptcha/Output/jobScripts/"
 
 # Assign the job scripts directory to the variable
-job_scripts_dir="$HOME/Maptcha/Output/jobScripts_Coxiella/"
+job_scripts_dir="$HOME/Maptcha/Output/jobScripts/"
 
 # Check if the directory was created successfully
 if [ -d "$job_scripts_dir" ]; then
@@ -150,7 +172,7 @@ for ((node=0; node < nodes; node++)); do
 
   # Write the PBS directives and the script content to the job script
   cat > "$job_script" <<EOF
-#!/bin/bash
+
 ## Define compute options for the node job
 #PBS -l nodes=1:amd:ppn=$ppn
 #PBS -l mem=120gb
@@ -167,7 +189,6 @@ EOF
   for folder in "${batch_folders[@]}"; do
     folder_name=$(basename "$folder")
     base_folder_name="${folder_name%%.*}" # Extract the base folder name without any file extension
-    #contigs_file="$folder/${folder_name}_Moth.fasta"
     contigs_file="$folder/${folder_name}_Contigs.fasta"
     long_reads_file="$folder/longread_IDS.fasta"
     output_file="${folder_name}.asm" # Use the base folder name for the output file
@@ -198,8 +219,8 @@ wait
 
 # Initialize the time_list array
 time_list=()
-phase1_2_output="$HOME/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa" 
-unusedlongreads="$HOME/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa"
+phase1_2_output="$contigs_input_file" 
+unusedlongreads="$long_reads_input_file"
 # Loop through each batch and read the elapsed times from the output files
 for ((node=0; node < nodes; node++)); do
   job_script="${job_scripts_dir}/job_script_node_${node}.sh"
@@ -260,7 +281,7 @@ echo "Longread Island Construction done! "
 
 python3 $HOME/Maptcha/src/merge.py $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/Output/Phase1_2_partialScaff.fa
 
-
+ 
 ## Define compute options
 #PBS -l nodes=1:amd:ppn=20
 #PBS -l mem=120gb
