@@ -29,7 +29,6 @@ g++ -fopenmp -O3 -o ~/Maptcha/src/graphLRID ~/Maptcha/src/graphLRID.cpp
 
 ################# Wiring and Path Enumeration  ###################
  
-#python3 ~/Maptcha/src/Wiring.py "$map_output" ~/Maptcha/graphWH.txt "~/Maptcha/wired_output.txt"
 python3 ~/Maptcha/src/Wiring.py "$map_output" ~/Maptcha/graphWH.txt "$HOME/Maptcha/wired_output.txt"
 
 
@@ -38,20 +37,17 @@ python3 ~/Maptcha/src/PathEnumeration.py "$map_output" $HOME/Maptcha/wired_outpu
 
 ################# Batching of Contigs  ###################
 
-#python3 $HOME/Maptcha/src/CreateCCFileForEachPair_args.py "$HOME/Maptcha/wired_output.txt" "$HOME/Maptcha/path_output.txt" "$HOME/Maptcha/Output/"
 python3 $HOME/Maptcha/src/CreateCCFileForEachPair_args.py "$HOME/Maptcha/wired_output.txt" "$HOME/Maptcha/graphLRID.txt" "$HOME/Maptcha/Output/"
 
 
 python3 $HOME/Maptcha/src/CreateBatchOfContigs.py "$HOME/Maptcha/path_output.txt" "$HOME/Maptcha/Output/" "$HOME/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa" "$HOME/Maptcha//TestInput/CoxiellaBurnetii_longreads.fa" "$HOME/Maptcha/Output/FastaFilesBatch_8192/" 40 8192
 
 
-#!/bin/bash
 ## Define compute options for the main job
 #PBS -l nodes=4:amd:ppn=2
 #PBS -l mem=4gb
 #PBS -l walltime=01:00:00
 
-#cd /home/obhowmik/hifiasm_old/
 cd $HOME/Maptcha/Hifiasm/
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
 
@@ -235,7 +231,6 @@ echo "Job scripts created and submitted in $elapsed_time seconds."
 python3 $HOME/Maptcha/src/CreateUnmappedUnusedLR.py $HOME/Maptcha/Output/FastaFilesBatch_8192/ $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa $HOME/Maptcha/Output/unused_longreads.fasta
 
 
-#!/bin/bash
 ## Define compute options
 #PBS -l nodes=3:amd:ppn=20
 #PBS -l mem=120gb
@@ -266,7 +261,6 @@ echo "Longread Island Construction done! "
 python3 $HOME/Maptcha/src/merge.py $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/Output/Phase1_2_partialScaff.fa
 
 
-#!/bin/bash 
 ## Define compute options
 #PBS -l nodes=1:amd:ppn=20
 #PBS -l mem=120gb
