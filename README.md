@@ -11,7 +11,7 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
 
 ## Installation Instructions
 
-To map long reads to contigs, Maptcha utilizes the following tools:
+Maptcha utilizes the following tools:
 
 - **JEM-Mapper**: [JEM-Mapper GitHub Repository](https://github.com/TazinRahman1105050/JEM-Mapper)
 - **Hifiasm**: [Hifiasm GitHub Repository](https://github.com/chhylp123/hifiasm)
@@ -20,7 +20,7 @@ To map long reads to contigs, Maptcha utilizes the following tools:
 
 1. **Install JEM-Mapper and Hifiasm**
 
-   Both JEM-Mapper and Hifiasm have their own dependencies and installation procedures. Please refer to their respective repositories for detailed installation instructions. We recommend installing these tools in the same directory as Maptcha to ensure smooth integration.
+Both JEM-Mapper and Hifiasm have their own dependencies and installation procedures. Please refer to their respective repositories for detailed installation instructions. We recommend installing these tools in the same directory as Maptcha to ensure smooth integration.
 
 2. **Clone the Maptcha Repository**
 
