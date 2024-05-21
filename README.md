@@ -27,11 +27,10 @@ Both JEM-Mapper and Hifiasm have their own dependencies and installation procedu
    ```bash
    git clone https://github.com/Oieswarya/Maptcha.git
 
-### For a quick test, you can use the provided setup with a test input where the necessary tools are pre-installed. Navigate  within the Maptcha repository and run the `maptcha.sh` script. 
+### For a quick test, you can use the provided setup with a test input where the necessary tools are pre-installed. Navigate within the Maptcha repository and run the `maptcha.sh` script. 
 
 ```bash
-chmod +x maptcha/src/maptcha.sh
-./maptcha.sh
+~/Maptcha/src/maptcha.sh ~/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa ~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa
 ```
 Ensure that you have the appropriate permissions to execute the job script.
 
