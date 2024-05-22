@@ -47,4 +47,4 @@ For more detailed usage and configuration options, please refer to the documenta
 - [JEM-Mapper Documentation](https://github.com/TazinRahman1105050/JEM-Mapper)
 - [Hifiasm Documentation](https://github.com/chhylp123/hifiasm)
 
-By following these steps, you should be able to set up and run Maptcha seamlessly. If you encounter any issues, please feel free to open an issue on the GitHub repository.
+If you encounter any issues, please feel free to open an issue on the GitHub repository.
