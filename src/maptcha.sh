@@ -28,35 +28,23 @@ fi
 #module load sqlite/3.35.1/system
 #module load openmpi/3.1.2/gcc/7.3.0
 
-
-
-
-
 #python3 $HOME/Maptcha/src/CreateCLFromLog.py
 cd ~/Maptcha/TestInput/
 map_output="$HOME/Maptcha/TestInput/CLPairs.log"
 
-
 g++ -fopenmp -O3 -o ~/Maptcha/src/GraphConstrWH ~/Maptcha/src/GraphConstrWH.cpp
 ~/Maptcha/src/GraphConstrWH "$map_output" ~/Maptcha/graphWH.txt
-
 
 g++ -fopenmp -O3 -o ~/Maptcha/src/graphLRID ~/Maptcha/src/graphLRID.cpp
 ~/Maptcha/src/graphLRID "$map_output" ~/Maptcha/graphLRID.txt
 
-
- 
 python3 ~/Maptcha/src/Wiring.py "$map_output" ~/Maptcha/graphWH.txt "$HOME/Maptcha/wired_output.txt"
 
-
 python3 ~/Maptcha/src/PathEnumeration.py "$map_output" $HOME/Maptcha/wired_output.txt $HOME/Maptcha/path_output.txt
-
-
 
 python3 $HOME/Maptcha/src/CreateCCFileForEachPair_args.py "$HOME/Maptcha/wired_output.txt" "$HOME/Maptcha/graphLRID.txt" "$HOME/Maptcha/Output/"
 
 python3 $HOME/Maptcha/src/CreateBatchOfContigs.py "$HOME/Maptcha/path_output.txt" "$HOME/Maptcha/Output/" "$contigs_input_file" "$long_reads_input_file" "$HOME/Maptcha/Output/FastaFilesBatch_8192/" 40 8192
-
 
 ## Define compute options for the main job
 #PBS -l nodes=4:amd:ppn=2
@@ -65,8 +53,6 @@ python3 $HOME/Maptcha/src/CreateBatchOfContigs.py "$HOME/Maptcha/path_output.txt
 
 cd $HOME/Maptcha/Hifiasm/
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
-
-
 
 # Set the path to the directory containing the input folders
 input_dir='$HOME/Maptcha/Output/FastaFilesBatch_8192/'
@@ -227,10 +213,7 @@ done
 # Calculate average and standard deviation
 calculate_stats
 
-
-
 echo "Batched assembly done! "
-
 
 # Calculate the total elapsed time for creating and submitting all job scripts
 end_time=$(date +%s)
@@ -240,8 +223,6 @@ elapsed_time=$((end_time - start_time))
 echo "Job scripts created and submitted in $elapsed_time seconds."
 
 python3 $HOME/Maptcha/src/CreateUnmappedUnusedLR.py $HOME/Maptcha/Output/FastaFilesBatch_8192/ $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa $HOME/Maptcha/Output/unused_longreads.fasta
-
-
 
 cd $HOME/Maptcha/Hifiasm/
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
@@ -254,7 +235,6 @@ mkdir $HOME/Maptcha/Output/Phase2/
 $HOME/Maptcha/Hifiasm/hifiasm -o $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm -t 64 $HOME/Maptcha/Output/unused_longreads.fasta
 
 awk '/^S/{print ">"$2;print $3}' $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa > $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa
-
 
 # Calculate the elapsed time
 end_time=$(date +%s)
@@ -275,7 +255,6 @@ mkdir $HOME/Maptcha/Output/Final/
 $HOME/Maptcha/Hifiasm/hifiasm -o $HOME/Maptcha/Output/Final/finalAssembly.asm -t 64 -n 1 "$phase1_2_output" "$unusedlongreads"
 
 awk '/^S/{print ">"$2;print $3}' $HOME/Maptcha/Output/Final/finalAssembly.asm.bp.p_ctg.gfa > $HOME/Maptcha/Output/Final/finalAssembly.fa
-
 
 # Calculate the elapsed time
 end_time=$(date +%s)
