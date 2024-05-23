@@ -31,14 +31,11 @@ fi
 
 
 
-############      Creating the log file from JEM-Mapper output      ###############
+
 #python3 $HOME/Maptcha/src/CreateCLFromLog.py
 cd ~/Maptcha/TestInput/
 map_output="$HOME/Maptcha/TestInput/CLPairs.log"
 
-#################################################################  Contig Expansion    ##############################################################################
-
-################# Graph Construction  ###################
 
 g++ -fopenmp -O3 -o ~/Maptcha/src/GraphConstrWH ~/Maptcha/src/GraphConstrWH.cpp
 ~/Maptcha/src/GraphConstrWH "$map_output" ~/Maptcha/graphWH.txt
@@ -48,7 +45,6 @@ g++ -fopenmp -O3 -o ~/Maptcha/src/graphLRID ~/Maptcha/src/graphLRID.cpp
 ~/Maptcha/src/graphLRID "$map_output" ~/Maptcha/graphLRID.txt
 
 
-################# Wiring and Path Enumeration  ###################
  
 python3 ~/Maptcha/src/Wiring.py "$map_output" ~/Maptcha/graphWH.txt "$HOME/Maptcha/wired_output.txt"
 
@@ -56,7 +52,6 @@ python3 ~/Maptcha/src/Wiring.py "$map_output" ~/Maptcha/graphWH.txt "$HOME/Maptc
 python3 ~/Maptcha/src/PathEnumeration.py "$map_output" $HOME/Maptcha/wired_output.txt $HOME/Maptcha/path_output.txt
 
 
-################# Batching of Contigs  ###################
 
 python3 $HOME/Maptcha/src/CreateCCFileForEachPair_args.py "$HOME/Maptcha/wired_output.txt" "$HOME/Maptcha/graphLRID.txt" "$HOME/Maptcha/Output/"
 
@@ -244,9 +239,6 @@ elapsed_time=$((end_time - start_time))
 # Print the total time taken
 echo "Job scripts created and submitted in $elapsed_time seconds."
 
-#################################################################  Longread Island Construction    ##############################################################################
-
-
 python3 $HOME/Maptcha/src/CreateUnmappedUnusedLR.py $HOME/Maptcha/Output/FastaFilesBatch_8192/ $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa $HOME/Maptcha/Output/unused_longreads.fasta
 
 
@@ -269,8 +261,6 @@ end_time=$(date +%s)
 elapsed_time=$((end_time - start_time))
 
 echo "Longread Island Construction done! "
-#################################################################  Link Scaffolds With Bridges    ##############################################################################
-
 
 python3 $HOME/Maptcha/src/merge.py $HOME/Maptcha/Output/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa $HOME/Maptcha/Output/contExp.fasta $HOME/Maptcha/Output/Phase1_2_partialScaff.fa
 
