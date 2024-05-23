@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 # Check if the number of arguments is correct
 if [ "$#" -ne 2 ]; then
     echo "Usage: $0 <contigs_input_file> <long_reads_input_file>"
@@ -39,11 +37,8 @@ g++ -fopenmp -O3 -o ~/Maptcha/src/graphLRID ~/Maptcha/src/graphLRID.cpp
 ~/Maptcha/src/graphLRID "$map_output" ~/Maptcha/graphLRID.txt
 
 python3 ~/Maptcha/src/Wiring.py "$map_output" ~/Maptcha/graphWH.txt "$HOME/Maptcha/wired_output.txt"
-
 python3 ~/Maptcha/src/PathEnumeration.py "$map_output" $HOME/Maptcha/wired_output.txt $HOME/Maptcha/path_output.txt
-
 python3 $HOME/Maptcha/src/CreateCCFileForEachPair_args.py "$HOME/Maptcha/wired_output.txt" "$HOME/Maptcha/graphLRID.txt" "$HOME/Maptcha/Output/"
-
 python3 $HOME/Maptcha/src/CreateBatchOfContigs.py "$HOME/Maptcha/path_output.txt" "$HOME/Maptcha/Output/" "$contigs_input_file" "$long_reads_input_file" "$HOME/Maptcha/Output/FastaFilesBatch_8192/" 40 8192
 
 ## Define compute options for the main job
@@ -157,10 +152,8 @@ for ((node=0; node < nodes; node++)); do
 #PBS -l mem=120gb
 #PBS -l walltime=06:00:00
 
-
 cd $HOME/Maptcha/Hifiasm
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
-
 
 EOF
 
@@ -260,5 +253,4 @@ awk '/^S/{print ">"$2;print $3}' $HOME/Maptcha/Output/Final/finalAssembly.asm.bp
 end_time=$(date +%s)
 elapsed_time=$((end_time - start_time))
 echo "Link Scaffolds With Bridges done! "
-
 
