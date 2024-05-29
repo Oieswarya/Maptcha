@@ -191,8 +191,6 @@ wait
 
 # Initialize the time_list array
 time_list=()
-phase1_2_output="$contigs_input_file" 
-unusedlongreads="$long_reads_input_file"
 # Loop through each batch and read the elapsed times from the output files
 for ((node=0; node < nodes; node++)); do
   job_script="${job_scripts_dir}/job_script_node_${node}.sh"
@@ -245,9 +243,14 @@ start_time=$(date +%s)
 
 mkdir $HOME/Maptcha/Output/Final/
 
-$HOME/Maptcha/Hifiasm/hifiasm -o $HOME/Maptcha/Output/Final/finalAssembly.asm -t 64 -n 1 "$phase1_2_output" "$unusedlongreads"
+#$HOME/Maptcha/Hifiasm/hifiasm -o $HOME/Maptcha/Output/Final/finalAssembly.asm -t 64 -n 1 "$phase1_2_output" "$unusedlongreads"
+$HOME/Maptcha/Hifiasm/hifiasm -o $HOME/Maptcha/Output/Final/finalAssembly.asm -t 64 -n 1 "$HOME/Maptcha/Output/phase1_2_output.fasta" "$HOME/Maptcha/Output/unusedlongreads.fasta"
 
 awk '/^S/{print ">"$2;print $3}' $HOME/Maptcha/Output/Final/finalAssembly.asm.bp.p_ctg.gfa > $HOME/Maptcha/Output/Final/finalAssembly.fa
+rm $HOME/Maptcha/Output/phase1_2_output.fasta
+rm $HOME/Maptcha/Output/unusedlongreads.fasta
+rm $HOME/Maptcha/Output/unused_longreads.fasta
+rm $HOME/Maptcha/Output/contExp.fasta
 
 # Calculate the elapsed time
 end_time=$(date +%s)
