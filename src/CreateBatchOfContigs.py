@@ -23,8 +23,7 @@ def create_fasta_files(contig_ids, lr_ids, contig_fasta, lr_fasta, output_dir, f
     
     with open(contig_out_file, 'w') as contig_fasta_file:
         SeqIO.write(contig_seqs, contig_fasta_file, "fasta")
-    phase1_2_output_file = os.path.join(input_dir, "phase1_2_output.fasta")
-    copyfile(contig_out_file, phase1_2_output_file)
+    
     
     # Process long read sequences
     lr_out_file = os.path.join(output_dir, "longread_IDS.fasta")
@@ -40,8 +39,6 @@ def create_fasta_files(contig_ids, lr_ids, contig_fasta, lr_fasta, output_dir, f
                         lr_fasta_file.write(line + "\n")
                 elif write_flag:
                     lr_fasta_file.write(line + "\n")
-    unused_longreads_file = os.path.join(input_dir, "unusedlongreads.fasta")
-    copyfile(lr_out_file, unused_longreads_file)
 
 def process_contig_ids(contig_set, input_dir, contig_fasta, lr_fasta, output_dir, folder_num):
     txt_files = set()
