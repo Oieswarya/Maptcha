@@ -200,7 +200,12 @@ for ((node=0; node < nodes; node++)); do
     time_list+=("$elapsed_time")
   done
 done
-python3 $HOME/Maptcha/Hifiasm/hifiasm.py "$HOME/Maptcha/path_output.txt" "$HOME/Maptcha/Output/" "$contigs_input_file" "$long_reads_input_file" "$HOME/Maptcha/Output/FastaFilesBatch_8192/" 40 8192
+
+chmod +x $HOME/Maptcha/src/maptcha
+#binary_path="$HOME/path/to/your/compiled/binary/maptcha"
+
+#Run the binary with the provided arguments
+$HOME/Maptcha/src/maptcha "$contigs_input_file" "$long_reads_input_file" "$HOME/Maptcha/Output/"
 # Calculate average and standard deviation
 calculate_stats
 
