@@ -23,8 +23,7 @@ Maptcha utilizes the following tools:
    ```bash
    git clone https://github.com/Oieswarya/Maptcha.git
    cd Maptcha
-
-
+   
 2. **Install necessary dependencies:**
 
    ```bash
@@ -41,17 +40,18 @@ Run the maptcha.sh script from the root directory:
 ```bash
 ./maptcha.sh -c path/to/contigs.fa -lr path/to/longreads.fa [options]
 
-Options:
 -c, --contigs Path to the contigs input file
 -lr, --longreads Path to the long reads input file
--t, --threads Number of threads to use (default: 1)
+Options:
+-t, --threads Number of threads to use (default: 32)
 -n, --nodes Number of nodes to use (default: 2)
 -p, --processes Number of processes per node (default: 2)
 -h, --help Show this help message
 Notes:
-Makefile: Manages setup, compilation, permissions, cleaning, and dependency installation.
+
 requirements.txt: Lists Python dependencies required for your tool (biopython, networkx, tqdm).
 README.md: Provides instructions on how to clone, set up dependencies, compile, and use your tool.
+This code has been tested on high-performance cluster (HPC) systems with MPI and OpenMP compatibility and has been tested for both PBS and SLURM job scheduling systems.
 
 
 ### For a quick test, you can use the provided setup where the necessary binary of the tools are pre-installed for a test input. Navigate within the Maptcha repository and run the `maptcha.sh` script. 
