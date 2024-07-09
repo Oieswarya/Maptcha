@@ -43,12 +43,14 @@ Run the maptcha.sh script from the root directory:
 -c, --contigs Path to the contigs input file
 -lr, --longreads Path to the long reads input file
 Options:
--t, --threads Number of threads to use (default: 32)
--n, --nodes Number of nodes to use (default: 2)
--p, --processes Number of processes per node (default: 2)
--h, --help Show this help message
-Notes:
+-o, --output       Output directory (default: $HOME/Maptcha/Output/)
+-t, --threads      Number of threads to use (default: 32)
+-n, --nodes        Number of nodes to use (default: 2)
+-p, --processes    Number of processes per node (default: 2)
+-h, --help         Show this help message
 
+
+Notes:
 requirements.txt: Lists Python dependencies required for your tool (biopython, networkx, tqdm).
 README.md: Provides instructions on how to clone, set up dependencies, compile, and use your tool.
 This code has been tested on high-performance cluster (HPC) systems with MPI and OpenMP compatibility and has been tested for both PBS and SLURM job scheduling systems.
