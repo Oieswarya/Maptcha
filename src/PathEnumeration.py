@@ -49,7 +49,7 @@ def compute_walk_progress(G):
     paths = []
 
     total_edges = len(G.edges())
-    pbar = tqdm(total=100)
+    #pbar = tqdm(total=100)
 
     while G.edges():
         path = [start_node]
@@ -87,7 +87,7 @@ def compute_walk_progress(G):
             start_node = next_node
 
             # Update progress bar
-            pbar.update((1 - len(G.edges()) / total_edges) * 100 - pbar.n)
+            #pbar.update((1 - len(G.edges()) / total_edges) * 100 - pbar.n)
 
         paths.append(path)
 #         print('got a path', path)
@@ -98,14 +98,14 @@ def compute_walk_progress(G):
             min_degree_nodes = [node for node, degree in G.degree() if degree == min_degree]
             start_node = random.choice(min_degree_nodes)
 
-    pbar.close()
+    #pbar.close()
     return paths
 
 def time_compute_walk(G):
     start_time = time.time()
     paths = compute_walk_progress(G)
     end_time = time.time()
-    print(f"The computation took {end_time - start_time} seconds.")
+    #print(f"The computation took {end_time - start_time} seconds.")
     return paths
 
 def transform_attributes_file(input_filename, output_filename):
