@@ -65,7 +65,7 @@ This code has been tested on high-performance cluster (HPC) systems with MPI and
 
 ```bash
 ~/Maptcha/src/maptcha.sh ~/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa ~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa
-```
+
 
 The final scaffolds will be located here: `~/Maptcha/Output/Final/finalAssembly.fa`, within the Output folder of the Maptcha directory.
 
