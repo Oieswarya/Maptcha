@@ -55,7 +55,7 @@ Options:
 -n, --nodes        Number of nodes to use (default: 2)
 -p, --processes    Number of processes per node (default: 2)
 -h, --help         Show this help message
-
+```
 
 Notes:
 This code has been tested on high-performance cluster (HPC) systems with MPI and OpenMP compatibility and has been tested for both PBS and SLURM job scheduling systems.
