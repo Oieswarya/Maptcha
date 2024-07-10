@@ -11,11 +11,6 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
 
 ## Installation Instructions
 
-Maptcha utilizes the following tools:
-
-- **JEM-Mapper**: [JEM-Mapper GitHub Repository](https://github.com/TazinRahman1105050/JEM-Mapper)
-- **Hifiasm**: [Hifiasm GitHub Repository](https://github.com/chhylp123/hifiasm)
-
 **Requirements:**
 Maptcha has the following dependencies:
 - C++14 (or greater) compliant compiler         [GCC >= 7.3.0]
@@ -79,6 +74,11 @@ The final scaffolds will be located here: `~/Maptcha/Output/Final/finalAssembly.
 On some clusters, you may need to load specific modules before installing dependencies and and then also while running Maptcha.
 
 Ensure that you have the appropriate permissions to execute the job script.
+
+Maptcha utilizes the following tools:
+
+- **JEM-Mapper**: [JEM-Mapper GitHub Repository](https://github.com/TazinRahman1105050/JEM-Mapper)
+- **Hifiasm**: [Hifiasm GitHub Repository](https://github.com/chhylp123/hifiasm)
 
 For more detailed usage and configuration options, please refer to the documentation within each tool's repository:
 
