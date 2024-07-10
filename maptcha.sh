@@ -8,7 +8,7 @@ print_help() {
     echo "  -c, --contigs    Path to the contigs input file"
     echo "  -lr, --longreads Path to the long reads input file"
     echo "  -o, --output     Output directory (default: \$HOME/Maptcha/Output/)"
-    echo "  -t, --threads    Number of threads to use (default: 1)"
+    echo "  -t, --threads    Number of threads to use (default: 16)"
     echo "  -n, --nodes      Number of nodes to use (default: 2)"
     echo "  -p, --processes  Number of processes per node (default: 2)"
     echo "  -h, --help       Show this help message"
@@ -16,7 +16,7 @@ print_help() {
 
 # Default values
 output_dir="$HOME/Maptcha/Output/"
-threads=64
+threads=16
 nodes=2
 processes=2
 
@@ -94,6 +94,8 @@ fi
 # Main processing steps
 
 start_time_maptcha=$(date +%s)
+chmod +x $HOME/Maptcha/src/jem
+mpiexec -np $np $HOME/Maptcha/src/jem -s "$contigs_input_file" -q "$long_reads_input_file" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
 cd ~/Maptcha/TestInput/
 map_output="$HOME/Maptcha/TestInput/CLPairs.log"
 
