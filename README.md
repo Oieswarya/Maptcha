@@ -57,7 +57,7 @@ Options:
 -h, --help         Show this help message
 ```
 
-Notes:
+Note:
 This code has been tested on high-performance cluster (HPC) systems with MPI and OpenMP compatibility and has been tested for both PBS and SLURM job scheduling systems.
 
 
