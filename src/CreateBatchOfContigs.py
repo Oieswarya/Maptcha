@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
     main(input_file, input_dir, contig_fasta, lr_fasta, output_dir, num_processes, num_contigs)
 
-print("Done!!!")
+print("Batches of fasta files are created!!!")
 
 '''
 import os
