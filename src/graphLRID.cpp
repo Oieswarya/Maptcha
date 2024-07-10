@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
     output_file.close();
     
     t2=omp_get_wtime();
-    cout << "Total Time: " << t2-t1 << endl;
+    //cout << "Total Time: " << t2-t1 << endl;
 
     return 0;
 }
