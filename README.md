@@ -63,7 +63,7 @@ This code has been tested on high-performance cluster (HPC) systems with MPI and
 
 ### For a quick test, you can use the provided test input. Navigate within the Maptcha repository and run the `maptcha.sh` script. 
 
-```
+```bash
 ~/Maptcha/src/maptcha.sh ~/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa ~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa
 ```
 
