@@ -99,7 +99,7 @@ int main(int argc, char** argv) {
     t2=omp_get_wtime();
     //output_file << "Total Time: "<< t2-t1 << endl;
     //cout << "Number of threads used: " << omp_get_num_threads() << endl;
-    cout << "Total Time: " << t2-t1 << endl;
+    //cout << "Total Time: " << t2-t1 << endl;
 
     return 0;
 }
