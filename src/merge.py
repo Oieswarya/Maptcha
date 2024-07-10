@@ -46,4 +46,4 @@ if __name__ == "__main__":
 
     merge_files(input_file1, input_file2, intermediate_file)
     renumber_reads(intermediate_file, output_file1)
-    print("Done")
+    #print("Done")
