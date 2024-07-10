@@ -16,6 +16,13 @@ Maptcha utilizes the following tools:
 - **JEM-Mapper**: [JEM-Mapper GitHub Repository](https://github.com/TazinRahman1105050/JEM-Mapper)
 - **Hifiasm**: [Hifiasm GitHub Repository](https://github.com/chhylp123/hifiasm)
 
+**Requirements:**
+Maptcha has the following dependencies:
+- C++14 (or greater) compliant compiler         [GCC >= 7.3.0]
+- MPI library (preferably MPI-3 compatible)     [OpenMPI >= 3.1.2]
+- Python 3 (or greater) compliant compiler      [Python >= 3.8]
+
+
 ### Step-by-Step Guide
 
 1. **Clone the Maptcha Repository:**
@@ -34,14 +41,19 @@ Maptcha utilizes the following tools:
    ```bash
    make all
 
+3. **Check if Maptcha is properly installed:**
+
+   ```bash
+   ./maptcha.sh -h
+
 ### Usage
 Run the maptcha.sh script from the root directory:
 
 ```bash
 ./maptcha.sh -c path/to/contigs.fa -lr path/to/longreads.fa [options]
 
--c, --contigs Path to the contigs input file
--lr, --longreads Path to the long reads input file
+-c, --contigs      Path to the contigs input file
+-lr, --longreads   Path to the long reads input file
 Options:
 -o, --output       Output directory (default: $HOME/Maptcha/Output/)
 -t, --threads      Number of threads to use (default: 32)
@@ -51,25 +63,22 @@ Options:
 
 
 Notes:
-requirements.txt: Lists Python dependencies required for your tool (biopython, networkx, tqdm).
-README.md: Provides instructions on how to clone, set up dependencies, compile, and use your tool.
 This code has been tested on high-performance cluster (HPC) systems with MPI and OpenMP compatibility and has been tested for both PBS and SLURM job scheduling systems.
 
 
-### For a quick test, you can use the provided setup where the necessary binary of the tools are pre-installed for a test input. Navigate within the Maptcha repository and run the `maptcha.sh` script. 
+### For a quick test, you can use the provided test input. Navigate within the Maptcha repository and run the `maptcha.sh` script. 
 
 ```bash
 ~/Maptcha/src/maptcha.sh ~/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa ~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa
 ```
-Ensure that you have the appropriate permissions to execute the job script.
 
 The final scaffolds will be located here: `~/Maptcha/Output/Final/finalAssembly.fa`, within the Output folder of the Maptcha directory.
 
-**Requirements:**
-You will still need the following modules:
-- C++14 (or greater) compliant compiler
-- MPI library (preferably MPI-3 compatible)
-- Python 3 (or greater) compliant compiler:
+
+**Tips:**
+On some clusters, you may need to load specific modules before installing dependencies and and then also while running Maptcha.
+
+Ensure that you have the appropriate permissions to execute the job script.
 
 For more detailed usage and configuration options, please refer to the documentation within each tool's repository:
 
