@@ -13,9 +13,9 @@ Maptcha addresses the hybrid scaffolding problem. We have three major phases:
 
 **Requirements:**
 Maptcha has the following dependencies:
-- C++14 (or greater) compliant compiler         [GCC >= 7.3.0]
-- MPI library (preferably MPI-3 compatible)     [OpenMPI >= 3.1.2]
-- Python 3 (or greater) compliant compiler      [Python >= 3.8]
+- C++14 (or greater) compliant compiler         
+- MPI library (MPI-3 compatible)     
+- Python 3 (or greater) compliant compiler      
 
 
 ### Step-by-Step Guide
