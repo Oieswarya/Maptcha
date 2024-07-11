@@ -237,19 +237,14 @@ mpiexec -np $np $HOME/Maptcha/src/jem -s "$output_dir/contExp.fasta" -q "$long_r
 
 python3 $HOME/Maptcha/src/CreateUnmappedUnusedLR.py "$output_dir/FastaFilesBatch_8192/" "$output_dir/contExp.fasta" "$long_reads_input_file" "$output_dir/unused_longreads.fasta"
 chmod +x $HOME/Maptcha/src/jem
-
 cd $HOME/Maptcha/Hifiasm/
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
 
 # Start the timer
 start_time=$(date +%s)
-
 mkdir -p "$output_dir/Phase2/"
-
 $HOME/Maptcha/Hifiasm/hifiasm -o "$output_dir/Phase2/Only_UnmappedUnusedLongreads.asm" -t $threads -n1 -a1 -r1 -f0 "$output_dir/unused_longreads.fasta" > /dev/null 2>&1
-
 awk '/^S/{print ">"$2;print $3}' "$output_dir/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa" > "$output_dir/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa"
-
 # Calculate the elapsed time
 end_time=$(date +%s)
 elapsed_time=$((end_time - start_time))
@@ -264,16 +259,14 @@ chmod +x $HOME/Maptcha/Hifiasm/hifiasm
 
 # Start the timer
 start_time=$(date +%s)
-
 mkdir -p "$output_dir/Final/"
-
 $HOME/Maptcha/Hifiasm/hifiasm -o "$output_dir/Final/finalAssembly.asm" -t $threads -n1 -a1 -r1 -f0 "$output_dir/unused_longreads.fasta" > /dev/null 2>&1
-
 awk '/^S/{print ">"$2;print $3}' "$output_dir/Final/finalAssembly.asm.bp.p_ctg.gfa" > "$output_dir/Final/finalAssembly.fa"
 rm "$output_dir/phase1_2_output.fasta"
 rm "$output_dir/unusedlongreads.fasta"
 rm "$output_dir/unused_longreads.fasta"
 rm "$output_dir/contExp.fasta"
+rm "$output_dir/Phase1_2_partialScaff.fa"
 rm -rf "$output_dir/FastaFilesBatch_8192/"
 rm -rf "$output_dir/jobScripts/"
 
