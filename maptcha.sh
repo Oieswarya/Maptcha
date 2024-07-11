@@ -91,6 +91,8 @@ else
     exit 1
 fi
 
+# Calculate the total number of processes
+np=$((nodes * processes))
 # Main processing steps
 
 start_time_maptcha=$(date +%s)
