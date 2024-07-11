@@ -233,7 +233,10 @@ elapsed_time=$((end_time - start_time))
 # Print the total time taken
 echo "Job scripts created and submitted in $elapsed_time seconds."
 
-python3 $HOME/Maptcha/src/CreateUnmappedUnusedLR.py "$output_dir/FastaFilesBatch_8192/" "$output_dir/contExp.fasta" "$HOME/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa" "$output_dir/unused_longreads.fasta"
+mpiexec -np $np $HOME/Maptcha/src/jem -s "$output_dir/contExp.fasta" -q "$long_reads_input_file" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
+
+python3 $HOME/Maptcha/src/CreateUnmappedUnusedLR.py "$output_dir/FastaFilesBatch_8192/" "$output_dir/contExp.fasta" "$long_reads_input_file" "$output_dir/unused_longreads.fasta"
+chmod +x $HOME/Maptcha/src/jem
 
 cd $HOME/Maptcha/Hifiasm/
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
@@ -254,6 +257,7 @@ elapsed_time=$((end_time - start_time))
 echo "Longread Island Construction done! "
 
 python3 $HOME/Maptcha/src/merge.py "$output_dir/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa" "$output_dir/contExp.fasta" "$output_dir/Phase1_2_partialScaff.fa"
+mpiexec -np $np $HOME/Maptcha/src/jem -s "$output_dir/Phase1_2_partialScaff.fa" -q "$l$output_dir/unused_longreads.fasta" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
 
 cd $HOME/Maptcha/Hifiasm/
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
@@ -271,6 +275,7 @@ rm "$output_dir/unusedlongreads.fasta"
 rm "$output_dir/unused_longreads.fasta"
 rm "$output_dir/contExp.fasta"
 rm -rf "$output_dir/FastaFilesBatch_8192/"
+rm -rf "$output_dir/jobScripts/"
 
 # Calculate the elapsed time
 end_time=$(date +%s)
