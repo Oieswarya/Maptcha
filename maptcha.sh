@@ -269,7 +269,26 @@ rm "$output_dir/contExp.fasta"
 rm "$output_dir/Phase1_2_partialScaff.fa"
 rm -rf "$output_dir/FastaFilesBatch_8192/"
 rm -rf "$output_dir/jobScripts/"
+calculate_stats() {
+    local sum_time=0
+    local num_folders=${#time_list[@]}
+    if ((num_folders > 0)); then
+        for folder_time in "${time_list[@]}"; do
+            sum_time=$((sum_time + folder_time))
+        done
+        average_time=$((sum_time / num_folders))
 
+        if ((num_folders > 1)); then
+            sum_squared_deviations=0
+            for folder_time in "${time_list[@]}"; do
+                deviation=$((folder_time - average_time))
+                sum_squared_deviations=$((sum_squared_deviations + (deviation * deviation)))
+            done
+            variance=$((sum_squared_deviations / num_folders))
+            standard_deviation=$(printf "%.2f" "$(echo "scale=10; sqrt($variance)" | bc)")
+        fi
+    fi
+}
 # Calculate the elapsed time
 end_time=$(date +%s)
 elapsed_time=$((end_time - start_time))
