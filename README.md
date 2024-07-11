@@ -48,7 +48,7 @@ Run the maptcha.sh script from the root directory:
 ./maptcha.sh -c path/to/contigs.fa -lr path/to/longreads.fa [options]
 
 -c, --contigs      Path to the contigs input file
--lr, --longreads   Path to the long reads input file
+-lr,--longreads    Path to the long reads input file
 Options:
 -o, --output       Output directory (default: $HOME/Maptcha/Output/)
 -t, --threads      Number of threads to use (default: 16)
@@ -64,7 +64,7 @@ This code has been tested on high-performance cluster (HPC) systems with MPI and
 ### For a quick test, you can use the provided test input. Navigate within the Maptcha repository and run the `maptcha.sh` script. 
 
 ```bash
-~/Maptcha/src/maptcha.sh ~/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa ~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa
+~/Maptcha/maptcha.sh -c ~/Maptcha/TestInput/minia_Coxiellaburnetii_contigs.fa -lr ~/Maptcha/TestInput/CoxiellaBurnetii_longreads.fa
 ```
 
 The final scaffolds will be located here: `~/Maptcha/Output/Final/finalAssembly.fa`, within the Output folder of the Maptcha directory.
