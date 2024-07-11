@@ -51,7 +51,7 @@ Run the maptcha.sh script from the root directory:
 -lr, --longreads   Path to the long reads input file
 Options:
 -o, --output       Output directory (default: $HOME/Maptcha/Output/)
--t, --threads      Number of threads to use (default: 32)
+-t, --threads      Number of threads to use (default: 16)
 -n, --nodes        Number of nodes to use (default: 2)
 -p, --processes    Number of processes per node (default: 2)
 -h, --help         Show this help message
