@@ -96,8 +96,10 @@ np=$((nodes * processes))
 # Main processing steps
 
 start_time_maptcha=$(date +%s)
+chmod +x $HOME/Maptcha/src/CreateFastaFromLR
 chmod +x $HOME/Maptcha/src/jem
-mpiexec -np $np $HOME/Maptcha/src/jem -s "$contigs_input_file" -q "$long_reads_input_file" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
+$HOME/Maptcha/src/CreateFastaFromLR "$long_reads_input_file" "$output_dir/lr_leftright.fa" "$output_dir/lr_concat.fa"
+mpiexec -np $np $HOME/Maptcha/src/jem -s "$contigs_input_file" -q "$output_dir/lr_concat.fa" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
 cd ~/Maptcha/TestInput/
 map_output="$HOME/Maptcha/TestInput/CLPairs.log"
 
@@ -221,20 +223,16 @@ done
 
 chmod +x $HOME/Maptcha/src/maptcha
 $HOME/Maptcha/src/maptcha "$contigs_input_file" "$long_reads_input_file" "$output_dir"
-
 calculate_stats
-
 echo "Batched assembly done! "
-
 # Calculate the total elapsed time for creating and submitting all job scripts
 end_time=$(date +%s)
 elapsed_time=$((end_time - start_time))
 
 # Print the total time taken
 echo "Job scripts created and submitted in $elapsed_time seconds."
-
-mpiexec -np $np $HOME/Maptcha/src/jem -s "$output_dir/contExp.fasta" -q "$long_reads_input_file" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
-
+$HOME/Maptcha/src/CreateFastaFromLR "$long_reads_input_file" "$output_dir/lr_leftright.fa" "$output_dir/lr_concat.fa"
+mpiexec -np $np $HOME/Maptcha/src/jem -s "$output_dir/contExp.fasta" -q "$output_dir/lr_concat.fa" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
 python3 $HOME/Maptcha/src/CreateUnmappedUnusedLR.py "$output_dir/FastaFilesBatch_8192/" "$output_dir/contExp.fasta" "$long_reads_input_file" "$output_dir/unused_longreads.fasta"
 chmod +x $HOME/Maptcha/src/jem
 cd $HOME/Maptcha/Hifiasm/
@@ -252,7 +250,8 @@ elapsed_time=$((end_time - start_time))
 echo "Longread Island Construction done! "
 
 python3 $HOME/Maptcha/src/merge.py "$output_dir/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa" "$output_dir/contExp.fasta" "$output_dir/Phase1_2_partialScaff.fa"
-mpiexec -np $np $HOME/Maptcha/src/jem -s "$output_dir/Phase1_2_partialScaff.fa" -q "$l$output_dir/unused_longreads.fasta" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
+$HOME/Maptcha/src/CreateFastaFromLR "$l$output_dir/unused_longreads.fasta" "$output_dir/lr_leftright.fa" "$output_dir/lr_concat.fa"
+mpiexec -np $np $HOME/Maptcha/src/jem -s "$output_dir/Phase1_2_partialScaff.fa" -q "$output_dir/lr_concat.fa" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
 
 cd $HOME/Maptcha/Hifiasm/
 chmod +x $HOME/Maptcha/Hifiasm/hifiasm
