@@ -94,11 +94,14 @@ fi
 # Calculate the total number of processes
 np=$((nodes * processes))
 # Main processing steps
-
-start_time_maptcha=$(date +%s)
 chmod +x $HOME/Maptcha/src/CreateFastaFromLR
 chmod +x $HOME/Maptcha/src/jem
 $HOME/Maptcha/src/CreateFastaFromLR "$long_reads_input_file" "$output_dir/lr_leftright.fa" "$output_dir/lr_concat.fa"
+
+start_time_maptcha=$(date +%s)
+#chmod +x $HOME/Maptcha/src/CreateFastaFromLR
+#chmod +x $HOME/Maptcha/src/jem
+#$HOME/Maptcha/src/CreateFastaFromLR "$long_reads_input_file" "$output_dir/lr_leftright.fa" "$output_dir/lr_concat.fa"
 mpiexec -np $np $HOME/Maptcha/src/jem -s "$contigs_input_file" -q "$output_dir/lr_concat.fa" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
 cd ~/Maptcha/TestInput/
 map_output="$HOME/Maptcha/TestInput/CLPairs.log"
