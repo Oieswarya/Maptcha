@@ -1,6 +1,10 @@
 # Maptcha
 
-Maptcha addresses the hybrid scaffolding problem. We have three major phases: 
+Maptcha addresses the hybrid genome scaffolding problem, which involves combining contigs and long reads to create a more complete and accurate genome assembly. Hybrid scaffolding aims to leverage the high accuracy of contigs with the long-range information provided by long reads.
+
+Maptcha's inputs are a FASTA file of contigs and a FASTA file of long reads, and the output is a FASTA file of scaffolds generated from them.
+
+We have three major phases: 
 1. Contig Expansion: Initially, the algorithm extends contigs using long reads that align with the ends of these contigs. This phase also involves detecting and connecting successive pairs of contigs using direct long read links, resulting in the generation of partial scaffolds.
 
 2. Long Read Island Construction: Not all long reads contribute to the initial partial scaffolds, especially those residing in the gap regions between successive scaffolds in the target genome. In this phase, the algorithm identifies long reads that do not map to any first-generation partial scaffolds. These reads are utilized to construct partial scaffolds corresponding to the "island" regions of long reads, forming the second generation of partial scaffolds.
