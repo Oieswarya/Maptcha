@@ -251,10 +251,11 @@ end_time=$(date +%s)
 elapsed_time=$((end_time - start_time))
 
 echo "Longread Island Construction done! "
-rm "$output_dir/contExp.fasta"
+#rm "$output_dir/contExp.fasta"
 python3 $HOME/Maptcha/src/merge.py "$output_dir/Phase2/Only_UnmappedUnusedLongreads.asm.bp.p_ctg.gfa.fa" "$output_dir/contExp.fasta" "$output_dir/Phase1_2_partialScaff.fa"
 $HOME/Maptcha/src/CreateFastaFromLR "$l$output_dir/unused_longreads.fasta" "$output_dir/lr_leftright.fa" "$output_dir/lr_concat.fa"
 rm "$output_dir/unusedlongreads.fasta"
+rm "$output_dir/contExp.fasta"
 mpiexec -np $np $HOME/Maptcha/src/jem -s "$output_dir/Phase1_2_partialScaff.fa" -q "$output_dir/lr_concat.fa" -a $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/A.txt -b /$HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/B.txt -p $HOME/Maptcha/JEM-Mapper/TestInput/ConstantsForLCH/Prime.txt -r 1000 -n 30
 rm "$output_dir/lr_leftright.fa" 
 rm "$output_dir/lr_concat.fa"
