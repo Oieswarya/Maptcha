@@ -14,8 +14,7 @@ We have three major phases:
 ## Citation
 If you use Maptcha in your research, please cite:
 
-Bhowmik, O., Rahman, T., & Kalyanaraman, A. (2024). Maptcha: An efficient parallel workflow for hybrid genome scaffolding. bioRxiv, 2024-03.
-doi: https://doi.org/10.1101/2024.03.25.586701
+Bhowmik, O., Rahman, T. & Kalyanaraman, A. Maptcha: an efficient parallel workflow for hybrid genome scaffolding. BMC Bioinformatics 25, 263 (2024). https://doi.org/10.1186/s12859-024-05878-4
 
 ## Installation Instructions
 
